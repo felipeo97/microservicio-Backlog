@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "f41ef907-f3c2-4a7b-ad0d-36b6abe90993",
+		"name": "Cloud Computing - Backlog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3598903"
+	},
+	"item": [
+		{
+			"name": "Backlog",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"projectIdentifier\":\"1\",\n    \"project\":\"1\",\n    \"projectTask\": [\n        {\n            \"id\":\"1\",\n            \"name\":\"crear repo\",\n            \"summary\":\"prueba\",\n            \"accpetanceCriteria\":\"tener el repo creado\",\n            \"status\":\"Not Stared\",\n            \"priority\": 1,\n            \"hours\":\"3\",\n            \"startDate\":\"\",\n            \"endDate\":\"\",\n            \"projectIdentifier\":\"\",\n            \"backlog\":\"1\"\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/backlogs",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"backlogs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"projectName\":\"1\",\n    \"projectIdentifier\":\"Cloud\",\n    \"description\":\"1\",\n    \"startDate\":\"2022-05-28\",\n    \"endDate\":\"2022-05-28\",\n    \"backlog\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/project",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"project"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Project",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/project",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"project"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 3,\n    \"name\": \"Brandon\",\n    \"summary\": \"sum\",\n    \"acceptanceCriteria\": \"\",\n    \"status\": \"PROGRESS\",\n    \"priority\": 3,\n    \"horus\": 1,\n    \"startDate\": \"\",\n    \"endDate\": \"\",\n    \"projectIdentifier\": \"2\",\n    \"backlog\": \"2\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8090/task",
+					"host": [
+						"localhost"
+					],
+					"port": "8090",
+					"path": [
+						"task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/task/1/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"task",
+						"1",
+						"2"
+					]
+				},
+				"description": "```\nBorrado lógico dela tarea, Se cambia el status por delete.\n```"
+			},
+			"response": []
+		},
+		{
+			"name": "Task Hours for Project",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1.0,\n    \"name\": \"Brandon\",\n    \"summary\": \"sum\",\n    \"acceptanceCriteria\": \"\",\n    \"status\": \"COMPLETED\",\n    \"priority\": 1,\n    \"horus\": 5,\n    \"startDate\": \"\",\n    \"endDate\": \"\",\n    \"projectIdentifier\": \"\",\n    \"backlogEntity\": {\n\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/task/project/hours/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"task",
+						"project",
+						"hours",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task Hours for Project Status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 1.0,\n    \"name\": \"Brandon\",\n    \"summary\": \"sum\",\n    \"acceptanceCriteria\": \"\",\n    \"status\": \"COMPLETED\",\n    \"priority\": 1,\n    \"horus\": 5,\n    \"startDate\": \"\",\n    \"endDate\": \"\",\n    \"projectIdentifier\": \"\",\n    \"backlogEntity\": {\n\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/task/project/hours/1/Deleted",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"task",
+						"project",
+						"hours",
+						"1",
+						"Deleted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task View All for Project",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/task/project/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"task",
+						"project",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,273 @@
+openapi: "3.0.0"
+info:
+  description: "Proyecto Microservicio Backlog"
+  version: "1.0.0"
+  title: "Microservicio Bakclog"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "manuela_acevedo23151@elpoli.edu.co"
+
+servers:
+  - url: http://localhost
+    description: Servidor localhost
+
+paths:
+  /backlogs:
+    post:
+      summary: Retorna HTTP 201 al crear exitosamente.
+      description: Adicionar nuevo bakclog.
+      requestBody:
+        description: Cuerpo de la petición Backlogs
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Backlog'
+      responses:
+        '201':
+          description: Creado Exitasamente
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Backlog'  
+        '400':
+          description: Bad Request
+    
+  /project:
+    post:
+      summary: Retorna HTTP 201 al crear exitosamente.
+      description: Adicionar nuevo proyecto.
+      requestBody:
+        description: Cuerpo de la petición Project
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '201':
+          description: Creado Exitasamente
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Project'  
+        '400':
+          description: Bad Request
+    get:
+      summary: Retorna HTTP 200 al consultar exitosamente los proyectos.
+      description: Ver todos proyecto.
+      responses:
+        '200':
+          description: Proyectos Consultas Exitasamente
+          content:
+            application/json:
+              schema: #TODO: debe retornar una Lista
+                $ref: '#/components/schemas/Project'  
+        '400':
+          description: Bad Request
+  
+  /task/project/{projectIdentifier}:
+    get:
+      summary: Retorna HTTP 200 al consultar exitosamente todas las tareas de un proyecto.
+      description: Ver todas las tareas de un proyecto.
+      parameters:
+        - name: projectIdentifier
+          in: path
+          description: Identificador del poryecto
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Consulta las tareas de un Proyecto Exitasamente
+          content:
+            application/json:
+              schema: #TODO: debe retornar una Lista
+                $ref: '#/components/schemas/ProjectTask'  
+        '404':
+          description: Not Found
+  
+  /task/project/hours/{projectIdentifier}:
+    get:
+      summary: Retorna HTTP 200 al consultar exitosamente el total de horas de un proyecto.
+      description: Total de horas del proyecto.
+      parameters:
+        - name: projectIdentifier
+          in: path
+          description: Identificador del poryecto
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Total de horas de un proyecto
+          content:
+            application/json:
+              schema: 
+                properties: 
+                  totalHours:
+                    type: string
+        '404':
+          description: Not Found
+          
+  /task/project/hours/{projectIdentifier}/{status}:
+    get:
+      summary: Retorna HTTP 200 al consultar exitosamente el total de horas de un proyecto por status.
+      description: Total de horas del proyecto según el status.
+      parameters:
+        - name: projectIdentifier
+          in: path
+          description: Identificador del poryecto
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: path
+          description: Estado 
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Total de horas de un proyecto por status
+          content:
+            application/json:
+              schema: 
+                properties: 
+                  totalHours:
+                    type: string
+        '404':
+          description: Not Found
+  
+  /task/{idtask}/{projectIdentifier}:
+    patch:
+      summary: Retorna HTTP 200 al cambiar el estado de la tarea.
+      description: Borrado logico dela tarea,se cambia el status por delete.
+      parameters:
+        - name: idtask
+          in: path
+          description: Identificador de la tarea 
+          required: true
+          schema:
+            type: string
+        - name: projectIdentifier
+          in: path
+          description: Identificador del poryecto
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Se cambia el estado de la tarea exitosamente.
+        '404':
+          description: Not Found
+          
+components:
+  schemas:
+    Backlog:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        projectIdentifier:
+          type: string
+          example: Enigma
+          minLength: 0
+        project:
+          type: object
+          example: Enigma
+        projectTask:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProjectTask"
+      
+      required:
+        - id
+        - projectIdentifier
+        - project
+        - projectTask
+    
+    Project:
+      type: object
+      properties:
+        id:
+          type: number
+        projectName:
+          type: string
+          minLength: 0
+        projectIdentifier:
+          type: string
+          minLength: 5
+          maxLength: 7
+        description:
+          type: string
+          minLength: 0
+        startDate: 
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        backlog:
+          type: number
+          example: 1
+          
+      required:
+        - id
+        - projectName
+        - projectIdentifier
+        - description
+        - backlog
+        
+    ProjectTask:
+      type: object
+      properties:
+        id:
+          type: number
+        name:
+          type: string
+          minLength: 0
+        summary:
+          type: string
+          minLength: 0
+        accpetanceCriteria:
+          type: string
+        status: 
+          type: string
+          example: In Progress
+          enum:
+            - Not Stared
+            - In Progress
+            - Completed
+            - Deleted
+        priority:
+          type: integer
+          minimum: 1
+          maximum: 5
+        hours:
+          type: object
+          minimum: 1
+          maximum: 8
+        startDate: 
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        projectIdentifier:
+          type: string
+        backlog:
+          type: number
+          example: 1
+          
+      required:
+        - id
+        - name
+        - summary
+        - status
+        - priority
+        - hours
+        - projectIdentifier
+        - backlog
+        
